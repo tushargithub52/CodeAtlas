@@ -48,7 +48,7 @@ public class UserService {
         return tokenEncryptor.encrypt(accessToken);
     }
 
-    private String decryptAccessToken(String encryptedAccessToken) {
+    public String decryptAccessToken(String encryptedAccessToken) {
         return tokenEncryptor.decrypt(encryptedAccessToken);
     }
 

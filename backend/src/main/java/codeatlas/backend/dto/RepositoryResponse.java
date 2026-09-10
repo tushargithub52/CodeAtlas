@@ -1,7 +1,9 @@
 package codeatlas.backend.dto;
 
+import codeatlas.backend.enitity.IndexStatus;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.time.Instant;
 import java.util.UUID;
 
 public record RepositoryResponse (
@@ -15,7 +17,8 @@ public record RepositoryResponse (
     String language,
     String htmlUrl,
     String description,
-    String indexStatus,
+    IndexStatus indexStatus,
+    Instant indexedAt,
     int chunkCount,
     int filesTotal,
     int filesProcessed,

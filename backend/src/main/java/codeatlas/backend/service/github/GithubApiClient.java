@@ -38,7 +38,7 @@ public class GithubApiClient {
         List<Map<String, Object>> all = new ArrayList<>();
 
         int page = 1;
-        while (page <= 10) {
+        while (true) {
             final int currentPage = page;
             List<Map<String, Object>> pageRepos = client(accessToken)
                     .get()
