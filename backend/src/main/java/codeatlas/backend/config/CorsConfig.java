@@ -10,9 +10,15 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * CORS configuration — defines allowed origins, methods, and headers for cross-origin requests.
+ */
 @Configuration
 public class CorsConfig {
 
+    /**
+     * Registers CORS rules from the app.cors.allowed-origins property, applying them globally to all routes.
+     */
     @Bean
     CorsConfigurationSource corsConfigurationSource(
             @Value("${app.cors.allowed-origins}") String allowedOrigins) {

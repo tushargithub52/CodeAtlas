@@ -6,6 +6,9 @@ import lombok.*;
 import java.time.Instant;
 import java.util.UUID;
 
+/**
+ * JPA entity representing a GitHub repository synced for a user, including its indexing state.
+ */
 @Entity
 @Table(name = "repositories", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "github_repo_id"}))
 @Getter

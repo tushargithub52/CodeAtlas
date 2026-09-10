@@ -10,6 +10,9 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * Spring Security principal wrapping the app's User entity and GitHub OAuth2 attributes.
+ */
 @RequiredArgsConstructor
 public class AppUserPrincipal implements OAuth2User {
 

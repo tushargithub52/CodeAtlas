@@ -3,6 +3,9 @@ package codeatlas.backend.service.github;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+/**
+ * Component that introduces a configurable delay between GitHub API calls to avoid hitting rate limits.
+ */
 @Component
 public class GithubRateLimiter {
     private final long delayMs;
@@ -11,6 +14,9 @@ public class GithubRateLimiter {
         this.delayMs = Math.max(0, delayMs);
     }
 
+    /**
+     * Sleeps for the configured delay duration — call this before each GitHub API request.
+     */
     public void pause() {
         if (delayMs <= 0) {
             return;

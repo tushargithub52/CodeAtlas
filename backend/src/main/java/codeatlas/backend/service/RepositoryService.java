@@ -17,6 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * Service for syncing and querying GitHub repositories stored in the database for a given user.
+ */
 @Service
 @RequiredArgsConstructor
 public class RepositoryService {
@@ -25,6 +28,9 @@ public class RepositoryService {
     private final UserService userService;
     private final GithubApiClient githubApiClient;
 
+    /**
+     * Fetches all repos from GitHub for the user, upserts them into the database, and returns the sorted list.
+     */
     @Transactional
     public List<RepositoryResponse> syncRepos(UUID userId) {
         User user = userService.requiredById(userId);
@@ -67,6 +73,9 @@ public class RepositoryService {
                 .toList();
     }
 
+    /**
+     * Returns all repositories for the user from the database, sorted alphabetically by full name.
+     */
     @Transactional(readOnly = true)
     public List<RepositoryResponse> listRepos(UUID userId) {
         return repositoryRepository
@@ -75,6 +84,9 @@ public class RepositoryService {
                 .toList();
     }
 
+    /**
+     * Returns a repository by ID only if it belongs to the given user, throwing NotFoundException otherwise.
+     */
     @Transactional(readOnly = true) 
     public Repository getOwnedRepo(UUID userId, UUID repoId) {
         return repositoryRepository
@@ -82,6 +94,9 @@ public class RepositoryService {
                 .orElseThrow(() -> new NotFoundException("Repository not found"));
     }
 
+    /**
+     * Returns the current index status and progress metrics for the given repository.
+     */
     @Transactional(readOnly = true)
     public IndexStatusResponse getIndexStatus(UUID repoId, UUID userId) {
         Repository repository = getOwnedRepo(userId, repoId);

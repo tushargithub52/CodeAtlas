@@ -15,6 +15,9 @@ import codeatlas.backend.security.CurrentUser;
 import codeatlas.backend.service.RepositoryService;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * REST controller for repository endpoints — handles listing, fetching, and checking index status of repos.
+ */
 @RestController 
 @RequestMapping("/api/repos")
 @RequiredArgsConstructor 
@@ -23,6 +26,9 @@ public class RepoController {
     private final CurrentUser currentUser;
     private final RepositoryService repositoryService;
     
+    /**
+     * Lists repos for the current user, optionally syncing from GitHub first if refresh is true.
+     */
     @GetMapping 
     public List<RepositoryResponse> list(
         @RequestParam(name = "refresh", defaultValue = "true") boolean refresh
@@ -36,12 +42,18 @@ public class RepoController {
         return repositoryService.listRepos(userId);
     }
 
+    /**
+     * Returns the details of a single repository owned by the current user.
+     */
     @GetMapping("/{id}")
     public RepositoryResponse get(@PathVariable UUID id) {
         UUID userId = currentUser.require().getId();
         return repositoryService.toResponse(repositoryService.getOwnedRepo(userId, id));
     }
 
+    /**
+     * Returns the current indexing status and progress for the given repository.
+     */
     @GetMapping("/{id}/status")
     public IndexStatusResponse getIndexStatus(@PathVariable UUID id) {
         UUID userId = currentUser.require().getId();

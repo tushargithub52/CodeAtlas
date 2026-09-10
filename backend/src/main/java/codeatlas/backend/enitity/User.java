@@ -6,6 +6,9 @@ import lombok.*;
 import java.time.Instant;
 import java.util.UUID;
 
+/**
+ * JPA entity representing a GitHub user stored in the database.
+ */
 @Entity
 @Getter
 @Setter

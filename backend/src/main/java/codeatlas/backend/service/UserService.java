@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * Service handling user persistence — creates or updates a user record after GitHub OAuth2 login.
+ */
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -17,6 +20,9 @@ public class UserService {
     private final UserRepository userRepository;
     private final TextEncryptor tokenEncryptor;
 
+    /**
+     * Creates or updates a user from GitHub OAuth2 attributes, encrypting and storing the access token.
+     */
     @Transactional
     public User upsertUserFromGithub(Map<String, Object> attributes, String accessToken, String scopes) {
         Long githubId = toLong(attributes.get("id"));
@@ -38,6 +44,9 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    /**
+     * Looks up a user by ID and throws if not found — used internally when a valid user is required.
+     */
     @Transactional(readOnly = true)
     public User requiredById(UUID id) {
         return userRepository.findById(id)
@@ -48,6 +57,9 @@ public class UserService {
         return tokenEncryptor.encrypt(accessToken);
     }
 
+    /**
+     * Decrypts a previously encrypted GitHub access token for use in API calls.
+     */
     public String decryptAccessToken(String encryptedAccessToken) {
         return tokenEncryptor.decrypt(encryptedAccessToken);
     }

@@ -6,6 +6,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.Instant;
 import java.util.UUID;
 
+/**
+ * DTO for returning repository details to the client, including index progress and metadata.
+ */
 public record RepositoryResponse (
     UUID id,
     Long githubRepoId,

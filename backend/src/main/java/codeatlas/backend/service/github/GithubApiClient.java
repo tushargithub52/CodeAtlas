@@ -12,6 +12,9 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * HTTP client for the GitHub REST API — handles repo listing, file tree fetching, and file content retrieval.
+ */
 @Service
 @RequiredArgsConstructor
 public class GithubApiClient {
@@ -24,6 +27,9 @@ public class GithubApiClient {
 
     private final RestClient.Builder restClientBuilder;
 
+    /**
+     * Builds a RestClient instance configured with auth headers for the given access token.
+     */
     private RestClient client(String accessToken) {
         return restClientBuilder
                 .baseUrl(API_BASE)
@@ -34,6 +40,9 @@ public class GithubApiClient {
                 .build();
     }
 
+    /**
+     * Fetches all repositories accessible to the user across all pages from the GitHub API.
+     */
     public List<Map<String, Object>> listUserRepos(String accessToken) {
         List<Map<String, Object>> all = new ArrayList<>();
 
@@ -63,6 +72,9 @@ public class GithubApiClient {
         return all;
     }
 
+    /**
+     * Returns the full recursive file tree of a repository at a given branch.
+     */
     public Map<String, Object> getRepoTree(String accessToken, String owner, String repo, String branch) {
         return client(accessToken)
                 .get()
@@ -71,6 +83,9 @@ public class GithubApiClient {
                 .body(MAP);
     }
 
+    /**
+     * Fetches and decodes the content of a file at the given path in a repository.
+     */
     public String getFileContent(String accessToken, String owner, String repo, String path) {
         Map<String, Object> body = client(accessToken)
                 .get()

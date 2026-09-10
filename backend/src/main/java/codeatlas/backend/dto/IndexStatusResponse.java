@@ -5,6 +5,9 @@ import java.util.UUID;
 
 import codeatlas.backend.enitity.IndexStatus;
 
+/**
+ * DTO for returning the current indexing status and file processing progress of a repository.
+ */
 public record IndexStatusResponse(
     UUID repositoryId,
     IndexStatus indexStatus,

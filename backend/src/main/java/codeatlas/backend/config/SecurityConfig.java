@@ -14,6 +14,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.*;
 
+/**
+ * Security configuration — sets up OAuth2 GitHub login, session management, CORS, CSRF, and route authorization rules.
+ */
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -21,6 +24,9 @@ public class SecurityConfig {
 
     private final GithubOAuth2UserService githubOAuth2UserService;
 
+    /**
+     * Redirects to the frontend callback page on successful GitHub OAuth2 login.
+     */
     @Bean
     public AuthenticationSuccessHandler authenticationSuccessHandler(
             @Value("${app.frontend-url}") String frontendUrl) {
@@ -29,6 +35,9 @@ public class SecurityConfig {
         return successHandler;
     }
 
+    /**
+     * Redirects to the frontend login page with an error param on OAuth2 authentication failure.
+     */
     @Bean
     public AuthenticationFailureHandler authenticationFailureHandler(
             @Value("${app.frontend-url}") String frontendUrl) {
@@ -37,6 +46,9 @@ public class SecurityConfig {
         return failureHandler;
     }
 
+    /**
+     * Builds the security filter chain with session-based auth, OAuth2 login, logout, and route access rules.
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(
             HttpSecurity httpSecurity,

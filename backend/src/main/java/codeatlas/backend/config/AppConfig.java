@@ -8,15 +8,24 @@ import org.springframework.web.client.RestClient;
 
 import java.util.concurrent.Executor;
 
+/**
+ * General application configuration — registers the RestClient builder and async indexing thread pool.
+ */
 @Configuration
 @EnableAsync
 public class AppConfig {
 
+    /**
+     * Provides a shared RestClient.Builder bean for making HTTP calls to external APIs.
+     */
     @Bean
     RestClient.Builder restClientBuilder() {
         return RestClient.builder();
     }
 
+    /**
+     * Thread pool executor used for async repository indexing tasks.
+     */
     @Bean(name = "Indexing Executor")
     Executor indexingExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
